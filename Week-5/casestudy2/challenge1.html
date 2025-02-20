@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Auto-Update Prices</title>
+</head>
+<body>
+  <!-- Example price elements -->
+  <div id="price-1">Price: $0.00</div>
+  <div id="price-2">Price: $0.00</div>
+
+  <script>
+    // Function to update prices
+    function updatePrices() {
+      fetch('https://api.example.com/prices') // Replace with your API URL
+        .then(response => response.json())
+        .then(data => {
+          // Assume data is an array of price objects, e.g., [{ id: 1, price: 25.00 }, { id: 2, price: 30.00 }]
+          data.forEach(item => {
+            const priceElement = document.getElementById(`price-${item.id}`);
+            if (priceElement) {
+              priceElement.innerText = `Price: $${item.price.toFixed(2)}`;
+            }
+          });
+        })
+        .catch(error => console.error('Error updating prices:', error));
+    }
+
+    // Update prices every 5 seconds (5000 milliseconds)
+    setInterval(updatePrices, 5000);
+
+    // Initial call to display prices immediately on load
+    updatePrices();
+  </script>
+</body>
+</html>
